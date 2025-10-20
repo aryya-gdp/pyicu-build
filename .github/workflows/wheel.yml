@@ -21,18 +21,19 @@ jobs:
     env:
       ICU_ARCH: 64
       ICU_PLAT: Win64-MSVC2022
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./deps/pyicu
     steps:
       - uses: actions/checkout@v5
       - run: download.cmd
         shell: cmd
-        working-directory: ./deps/pyicu
       - uses: pypa/cibuildwheel@v3.2.0
         env:
           CIBW_ARCHS_WINDOWS: AMD64
           CIBW_ENVIRONMENT_WINDOWS: INCLUDE="include;$INCLUDE" LIB="lib$ICU_ARCH;$LIB"
-        working-directory: ./deps/pyicu
       - uses: actions/upload-artifact@v4
         with:
           path: ./wheelhouse/*.whl
           name: wheels-win-amd64
-        working-directory: ./deps/pyicu
