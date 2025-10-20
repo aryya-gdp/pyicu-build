@@ -21,9 +21,6 @@ jobs:
     env:
       ICU_ARCH: 64
       ICU_PLAT: Win64-MSVC2022
-    defaults:
-      run:
-        working-directory: ./deps/pyicu
     steps:
       - uses: actions/checkout@v5
       - run: download.cmd
