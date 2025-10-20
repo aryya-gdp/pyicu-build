@@ -23,12 +23,15 @@ jobs:
       ICU_PLAT: Win64-MSVC2022
     defaults:
       run:
-        shell: bash
         working-directory: ./deps/pyicu
     steps:
       - uses: actions/checkout@v5
       - run: download.cmd
         shell: cmd
+      - shell: bash
+        run: |
+          pwd
+          ls -al
       - uses: pypa/cibuildwheel@v3.2.0
         env:
           CIBW_ARCHS_WINDOWS: AMD64
