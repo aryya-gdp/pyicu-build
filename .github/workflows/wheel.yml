@@ -28,12 +28,8 @@ jobs:
         shell: cmd
         run: |
           cd deps\pyicu
-          call download.cmd
-          echo Checking if setup.py exists:
-          dir setup.py
-          echo Checking if patch was applied:
-          findstr /C:"/std:c++17" setup.py
-        
+          download.cmd
+
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.11.2
         with:
@@ -41,8 +37,8 @@ jobs:
           output-dir: wheelhouse
         env:
           CIBW_ARCHS_WINDOWS: AMD64
-          CIBW_ENVIRONMENT_WINDOWS: INCLUDE="{project}\include;$INCLUDE" LIB="{project}\lib$ICU_ARCH;$LIB"
-          CIBW_TEST_COMMAND: pytest {project}/test
+          CIBW_ENVIRONMENT_WINDOWS: INCLUDE="${{ github.workspace }}\include;$INCLUDE" LIB="${{ github.workspace }}\lib$ICU_ARCH;$LIB"
+          CIBW_TEST_COMMAND: pytest ${{ github.workspace }}/test
       - uses: actions/upload-artifact@v4
         with:
           path: wheelhouse
