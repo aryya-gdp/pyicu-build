@@ -7,8 +7,8 @@ if errorlevel 1 exit /B 1
 tar -xf pyicu.zip --strip-components=1
 if errorlevel 1 exit /B 1
 
-@REM git apply --verbose --binary PyICU.diff
-@REM if errorlevel 1 exit /B 1
+git apply --verbose --binary PyICU.diff
+if errorlevel 1 exit /B 1
 
 curl -L -o icu4c.zip https://github.com/unicode-org/icu/releases/download/release-%ICU_RELEASE%-%ICU_PLAT%.zip
 if errorlevel 1 exit /B 1

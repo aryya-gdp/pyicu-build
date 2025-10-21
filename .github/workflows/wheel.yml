@@ -42,14 +42,6 @@ jobs:
           echo "Checking setup.py for C++17 flag:"
           grep -A5 "win32.*std:c++17" setup.py || echo "C++17 flag not found in setup.py!"
 
-      # - name: Setup ICU paths
-      #   shell: cmd
-      #   run: |
-      #     mkdir c:\icu
-      #     xcopy /E /I /Y deps\pyicu\include c:\icu\include
-      #     xcopy /E /I /Y deps\pyicu\lib64 c:\icu\lib64
-      #     xcopy /Y deps\pyicu\bin64\*.dll c:\icu\lib64\
-
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.16.5
         with:
