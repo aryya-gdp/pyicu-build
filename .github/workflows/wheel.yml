@@ -37,9 +37,9 @@ jobs:
         run: |
           pwd
           ls -al
-          cd deps/pyicu
-          pwd
-          ls -al
+          # cd deps/pyicu
+          # pwd
+          # ls -al
           ls -al bin64
           ls -al py/icu
           ls -al lib64
