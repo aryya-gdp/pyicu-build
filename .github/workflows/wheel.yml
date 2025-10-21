@@ -2,6 +2,9 @@ name: Build PyICU wheels for Windows
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 env:
   PYICU_TAG: v2.15.3
@@ -44,7 +47,7 @@ jobs:
           output-dir: wheelhouse
         env:
           CIBW_ARCHS_WINDOWS: AMD64
-          # CIBW_ENVIRONMENT_WINDOWS: INCLUDE="${{ github.workspace }}\include;$INCLUDE" LIB="${{ github.workspace }}\lib$ICU_ARCH;$LIB"
+          CIBW_ENVIRONMENT_WINDOWS: INCLUDE="${{ github.workspace }}\deps\pyicu\include;$INCLUDE" LIB="${{ github.workspace }}\deps\pyicu\lib${{ env.ICU_ARCH }};$LIB"
           # CIBW_TEST_COMMAND: pytest ${{ github.workspace }}/test
           CIBW_SKIP: "*-win32 *-musllinux_*"
           CIBW_BUILD: "cp311* cp312* cp313*"
