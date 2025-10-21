@@ -20,9 +20,12 @@ jobs:
     env:
       ICU_ARCH: 64
       ICU_PLAT: Win64-MSVC2022
-      PYICU_TAG: ${{ replace(github.ref_name, 'deps_pyicu-', '') }}
     steps:
       - uses: actions/checkout@v5
+      
+      - name: Extract PyICU version from tag
+        shell: bash
+        run: echo "PYICU_TAG=${GITHUB_REF_NAME#deps_pyicu-}" >> $GITHUB_ENV
       
       - name: Download and prepare PyICU
         shell: cmd
