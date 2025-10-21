@@ -1,13 +1,11 @@
 name: Build PyICU wheels for Windows
 
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - main
+    tags:
+      - 'pyicu-v*'
 
 env:
-  PYICU_TAG: v2.15.3
   ICU_VERSION: 77
   ICU_RELEASE: 77-1/icu4c-77_1
 
@@ -22,6 +20,7 @@ jobs:
     env:
       ICU_ARCH: 64
       ICU_PLAT: Win64-MSVC2022
+      PYICU_TAG: ${{ replace(github.ref_name, 'pyicu-', '') }}
     steps:
       - uses: actions/checkout@v5
       
