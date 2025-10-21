@@ -40,6 +40,14 @@ jobs:
           cd deps/pyicu
           ls -al
 
+      - name: Setup ICU paths
+        shell: cmd
+        run: |
+          mkdir c:\icu
+          xcopy /E /I /Y deps\pyicu\include c:\icu\include
+          xcopy /E /I /Y deps\pyicu\lib64 c:\icu\lib64
+          xcopy /Y deps\pyicu\bin64\*.dll c:\icu\lib64\
+
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.16.5
         with:
@@ -47,7 +55,7 @@ jobs:
           output-dir: wheelhouse
         env:
           CIBW_ARCHS_WINDOWS: AMD64
-          CIBW_ENVIRONMENT_WINDOWS: INCLUDE="${{ github.workspace }}\deps\pyicu\include;$INCLUDE" LIB="${{ github.workspace }}\deps\pyicu\lib${{ env.ICU_ARCH }};$LIB"
+          CIBW_ENVIRONMENT_WINDOWS: INCLUDE="c:\\icu\\include;$INCLUDE" LIB="c:\\icu\\lib64;$LIB"
           # CIBW_TEST_COMMAND: pytest ${{ github.workspace }}/test
           CIBW_SKIP: "*-win32 *-musllinux_*"
           CIBW_BUILD: "cp311* cp312* cp313*"
