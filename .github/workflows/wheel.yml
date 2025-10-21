@@ -64,7 +64,7 @@ jobs:
           output-dir: wheelhouse
         env:
           CIBW_ARCHS_WINDOWS: AMD64
-          CIBW_ENVIRONMENT_WINDOWS: INCLUDE="include;$INCLUDE" LIB="lib64;$LIB"
+          CIBW_ENVIRONMENT_WINDOWS: INCLUDE="/d/a/pyicu-build/pyicu-build/deps/pyicu/include;$INCLUDE" LIB="/d/a/pyicu-build/pyicu-build/deps/pyicu/lib64;$LIB"
           # CIBW_TEST_COMMAND: pytest ${{ github.workspace }}/test
           CIBW_SKIP: "*-win32 *-musllinux_*"
           CIBW_BUILD: "cp311* cp312* cp313*"
