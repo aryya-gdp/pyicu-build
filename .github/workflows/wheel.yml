@@ -39,6 +39,8 @@ jobs:
           ls -al
           cd deps/pyicu
           ls -al
+          echo "Checking setup.py for C++17 flag:"
+          grep -A5 "win32.*std:c++17" setup.py || echo "C++17 flag not found in setup.py!"
 
       - name: Setup ICU paths
         shell: cmd
@@ -55,7 +57,7 @@ jobs:
           output-dir: wheelhouse
         env:
           CIBW_ARCHS_WINDOWS: AMD64
-          CIBW_ENVIRONMENT_WINDOWS: INCLUDE="c:\\icu\\include;$INCLUDE" LIB="c:\\icu\\lib64;$LIB"
+          CIBW_ENVIRONMENT_WINDOWS: INCLUDE="c:\\icu\\include;$INCLUDE" LIB="c:\\icu\\lib64;$LIB" CXXFLAGS="/std:c++17"
           # CIBW_TEST_COMMAND: pytest ${{ github.workspace }}/test
           CIBW_SKIP: "*-win32 *-musllinux_*"
           CIBW_BUILD: "cp311* cp312* cp313*"
