@@ -50,7 +50,7 @@ jobs:
           cd py/icu
           pwd
           ls -al
-          cd ..
+          cd ../..
           
           cd lib64
           pwd
