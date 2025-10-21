@@ -40,7 +40,7 @@ jobs:
           CIBW_ARCHS_WINDOWS: AMD64
           CIBW_ENVIRONMENT_WINDOWS: INCLUDE="include;$INCLUDE" LIB="lib64;$LIB"
           CIBW_TEST_REQUIRES: pytest six
-          CIBW_TEST_COMMAND: pytest {project}/test
+          CIBW_TEST_COMMAND: pytest {project}/deps/pyicu/test
           CIBW_BUILD: "cp311* cp312* cp313*"
 
       - uses: actions/upload-artifact@v4
