@@ -37,8 +37,7 @@ jobs:
           python -m pip install cibuildwheel
 
       - name: Build wheels
-        run: |
-          python -m cibuildwheel --output-dir wheelhouse ./
+        uses: pypa/cibuildwheel@v2.11.2
         with:
           package-dir: deps/pyicu
           output-dir: wheelhouse
