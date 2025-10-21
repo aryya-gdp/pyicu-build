@@ -29,7 +29,7 @@ jobs:
       - name: Download and prepare PyICU
         shell: cmd
         run: |
-          cd deps\pyicu
+          # cd deps\pyicu
           download.cmd
       
       - name: check1
@@ -47,7 +47,7 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.16.5
         with:
-          package-dir: deps/pyicu
+          # package-dir: deps/pyicu
           output-dir: wheelhouse
         env:
           CIBW_ARCHS_WINDOWS: AMD64
