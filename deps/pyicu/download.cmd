@@ -7,6 +7,9 @@ if errorlevel 1 exit /B 1
 tar -xf pyicu.zip --strip-components=1
 if errorlevel 1 exit /B 1
 
+git init
+if errorlevel 1 exit /B 1
+
 git apply --check --verbose PyICU.diff > patch_check.log 2>&1
 set PATCH_CHECK_RESULT=%errorlevel%
 type patch_check.log
