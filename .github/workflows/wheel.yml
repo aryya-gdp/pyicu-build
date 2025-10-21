@@ -29,7 +29,7 @@ jobs:
       - name: Download and prepare PyICU
         shell: cmd
         run: |
-          # cd deps\pyicu
+          cd deps\pyicu
           download.cmd
       
       - name: check1
@@ -37,21 +37,39 @@ jobs:
         run: |
           pwd
           ls -al
-          # cd deps/pyicu
-          # pwd
-          # ls -al
-          ls -al bin64
-          ls -al py/icu
+          
+          cd deps/pyicu
+          pwd
+          ls -al
+          
+          cd bin64
+          pwd
+          ls -al
+          cd ..
+          
+          cd py/icu
+          pwd
+          ls -al
+          cd ..
+          
+          cd lib64
+          pwd
           ls -al lib64
+          cd ..
+
+          cd include
+          pwd
+          ls -al
+          cd ..
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.16.5
         with:
-          # package-dir: deps/pyicu
+          package-dir: deps/pyicu
           output-dir: wheelhouse
         env:
           CIBW_ARCHS_WINDOWS: AMD64
-          CIBW_ENVIRONMENT_WINDOWS: INCLUDE="include;$INCLUDE" LIB="lib$ICU_ARCH;$LIB"
+          CIBW_ENVIRONMENT_WINDOWS: INCLUDE="/d/a/pyicu-build/pyicu-build/include;$INCLUDE" LIB="/d/a/pyicu-build/pyicu-build/lib64;$LIB"
           # CIBW_TEST_COMMAND: pytest ${{ github.workspace }}/test
           CIBW_SKIP: "*-win32 *-musllinux_*"
           CIBW_BUILD: "cp311* cp312* cp313*"
