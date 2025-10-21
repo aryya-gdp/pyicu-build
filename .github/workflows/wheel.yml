@@ -51,11 +51,6 @@ jobs:
           pwd
           ls -al
           cd ../..
-          
-          cd bin64
-          pwd
-          ls -al bin64
-          cd ..
 
           cd include
           pwd
