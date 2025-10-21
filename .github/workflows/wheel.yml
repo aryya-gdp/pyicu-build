@@ -3,7 +3,7 @@ name: Build PyICU wheels for Windows
 on:
   push:
     tags:
-      - 'pyicu-v*'
+      - 'deps_pyicu-v*'
 
 env:
   ICU_VERSION: 77
@@ -20,7 +20,7 @@ jobs:
     env:
       ICU_ARCH: 64
       ICU_PLAT: Win64-MSVC2022
-      PYICU_TAG: ${{ replace(github.ref_name, 'pyicu-', '') }}
+      PYICU_TAG: ${{ replace(github.ref_name, 'deps_pyicu-', '') }}
     steps:
       - uses: actions/checkout@v5
       
