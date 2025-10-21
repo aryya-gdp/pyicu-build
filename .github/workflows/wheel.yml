@@ -10,7 +10,6 @@ env:
   PYICU_TAG: v2.15.3
   ICU_VERSION: 77
   ICU_RELEASE: 77-1/icu4c-77_1
-  # CIBW_TEST_REQUIRES: pytest six
 
 jobs:
   build_amd64:
@@ -31,31 +30,6 @@ jobs:
         run: |
           cd deps\pyicu
           download.cmd
-      
-      - name: check1
-        shell: bash
-        run: |
-          pwd
-          ls -al
-          
-          cd deps/pyicu
-          pwd
-          ls -al
-          
-          cd bin64
-          pwd
-          ls -al
-          cd ..
-          
-          cd py/icu
-          pwd
-          ls -al
-          cd ../..
-
-          cd include
-          pwd
-          ls -al
-          cd ..
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.16.5
@@ -64,10 +38,11 @@ jobs:
           output-dir: wheelhouse
         env:
           CIBW_ARCHS_WINDOWS: AMD64
-          CIBW_ENVIRONMENT_WINDOWS: INCLUDE="/d/a/pyicu-build/pyicu-build/deps/pyicu/include;$INCLUDE" LIB="/d/a/pyicu-build/pyicu-build/deps/pyicu/lib64;$LIB"
-          # CIBW_TEST_COMMAND: pytest ${{ github.workspace }}/test
-          CIBW_SKIP: "*-win32 *-musllinux_*"
+          CIBW_ENVIRONMENT_WINDOWS: INCLUDE="include;$INCLUDE" LIB="lib64;$LIB"
+          CIBW_TEST_REQUIRES: pytest six
+          CIBW_TEST_COMMAND: pytest {project}/test
           CIBW_BUILD: "cp311* cp312* cp313*"
+
       - uses: actions/upload-artifact@v4
         with:
           path: ./wheelhouse/*.whl

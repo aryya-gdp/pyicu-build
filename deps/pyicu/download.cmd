@@ -7,6 +7,7 @@ if errorlevel 1 exit /B 1
 tar -xf pyicu.zip --strip-components=1
 if errorlevel 1 exit /B 1
 
+:: Required for subdirectory setup
 git init
 if errorlevel 1 exit /B 1
 
