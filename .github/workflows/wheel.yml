@@ -52,9 +52,9 @@ jobs:
           ls -al
           cd ../..
           
-          cd lib64
+          cd bin64
           pwd
-          ls -al lib64
+          ls -al bin64
           cd ..
 
           cd include
