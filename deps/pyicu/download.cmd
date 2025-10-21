@@ -7,20 +7,28 @@ if errorlevel 1 exit /B 1
 tar -xf pyicu.zip --strip-components=1
 if errorlevel 1 exit /B 1
 
-git apply --check --verbose PyICU.diff
-if errorlevel 1 (
-  echo Patch check failed. Attempting to apply anyway...
-  git apply --verbose --binary PyICU.diff
+git apply --check --verbose PyICU.diff > patch_check.log 2>&1
+set PATCH_CHECK_RESULT=%errorlevel%
+type patch_check.log
+
+findstr /C:"Skipped patch" patch_check.log > nul
+if %errorlevel% equ 0 (
+  echo WARNING: Patch was skipped. Checking if already applied...
+  git apply -R --check --verbose PyICU.diff > patch_reverse_check.log 2>&1
   if errorlevel 1 (
-    echo Patch application failed. Checking if already applied...
-    git apply -R --check --verbose PyICU.diff
-    if errorlevel 1 (
-      echo ERROR: Patch neither applies nor reverses cleanly.
-      exit /B 1
-    ) else (
-      echo Patch appears to be already applied. Continuing...
-    )
+    echo ERROR: Patch appears to be skipped but cannot reverse. Dumping setup.py for inspection:
+    type setup.py
+    exit /B 1
+  ) else (
+    echo Patch is already applied. Continuing...
   )
+) else if %PATCH_CHECK_RESULT% neq 0 (
+  echo ERROR: Patch check failed with error code %PATCH_CHECK_RESULT%
+  exit /B 1
+) else (
+  echo Patch check passed. Applying patch...
+  git apply --verbose --binary PyICU.diff
+  if errorlevel 1 exit /B 1
 )
 
 curl -L -o icu4c.zip https://github.com/unicode-org/icu/releases/download/release-%ICU_RELEASE%-%ICU_PLAT%.zip
