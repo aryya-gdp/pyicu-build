@@ -30,11 +30,6 @@ jobs:
         shell: cmd
         run: |
           cd deps\pyicu
-          set PYICU_TAG=${{ env.PYICU_TAG }}
-          set ICU_VERSION=${{ env.ICU_VERSION }}
-          set ICU_RELEASE=${{ env.ICU_RELEASE }}
-          set ICU_ARCH=${{ env.ICU_ARCH }}
-          set ICU_PLAT=${{ env.ICU_PLAT }}
           download.cmd
       
       - name: check1
@@ -43,13 +38,11 @@ jobs:
           pwd
           ls -al
           cd deps/pyicu
+          pwd
           ls -al
-          echo "Checking for include directory:"
-          ls -al include/ || echo "include directory not found!"
-          echo "Checking for lib64 directory:"
-          ls -al lib64/ || echo "lib64 directory not found!"
-          echo "Checking setup.py for C++17 flag:"
-          grep -A5 "win32.*std:c++17" setup.py || echo "C++17 flag not found in setup.py!"
+          ls -al bin64
+          ls -al py/icu
+          ls -al lib64
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.16.5
